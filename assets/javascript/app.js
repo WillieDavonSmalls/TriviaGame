@@ -2,7 +2,7 @@ var questions =
 [
     ["Who sings the hook on Jay Z’s Can’t Knock the Hustle?","Janet Jackson","Aaliyah","Mary J. Blige","Beyonce","Mary J. Blige"],
     ["Who are the original members of Nas’ rap collective The Firm?","Lil Kim, AZ, Fabolous, Naz","Noreaga, Capone, Foxy Brown","Lil Kim, Cornega, Jay Z","Foxy Brown, AZ, Cormega, Nas","Foxy Brown, AZ, Cormega, Nas"],
-    ["Ali Shaheed Muhammad is part of which rap group","Jungle Brothers","Das EFX","De La Soul","Tribe Called Quest","Tribe Called Quest"],
+    ["Ali Shaheed Muhammad is part of which rap group?","Jungle Brothers","Das EFX","De La Soul","Tribe Called Quest","Tribe Called Quest"],
     ["What is Camp Lo's Luchini about?","Cars","Pasta","A mobster","Money","Money"],
     ["Who did Tupac diss on the track Hit Em Up?","Puff Daddy","Lil Kim","Notorious BIG","Mob Deep","All of these","All of these"],
     ["Which is the correct name/spelling for this Cleveland, Ohio, rap group?","Bone Thugs of Harmony","Bone Thugs with Harmony","Bone Thugs & Harmony","Bone Thugs-N-Harmony","Bone Thugs-N-Harmony"],
@@ -33,7 +33,7 @@ var randomQuestionArray = [];
 // get a list of random numbers for questions to choose
 do{
     var i = randomQuestionArray.length;
-    var ranNum = getRandomInt(1,17);
+    var ranNum = getRandomInt(0,16);
     if(randomQuestionArray.indexOf(ranNum) === -1){
         randomQuestionArray.push(ranNum);
     }
@@ -47,4 +47,25 @@ for(var i = 0; i < 5; i++){
     selectedQuestions.push(questions[randomQuestionArray[i]]);
 }
 
-console.log(selectedQuestions);
+//Extract Question/Answer
+for(var i = 0; i < 5; i++){
+    var question = selectedQuestions[i][0];
+    var options = selectedQuestions[i].slice(1, selectedQuestions[i].length-1); 
+    var answer = selectedQuestions[i].slice(selectedQuestions[i].length-1);
+    console.log(questions, options, answer);
+
+    //Display questions on UI
+    $('#questionHolder').append('<div>' + question + '</div>'); 
+}
+
+<form>
+<label class="radio-inline">
+  <input type="radio" name="optradio">Option 1
+</label>
+<label class="radio-inline">
+  <input type="radio" name="optradio">Option 2
+</label>
+<label class="radio-inline">
+  <input type="radio" name="optradio">Option 3
+</label>
+</form>
