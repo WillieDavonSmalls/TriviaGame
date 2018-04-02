@@ -37,7 +37,6 @@ do{
     if(randomQuestionArray.indexOf(ranNum) === -1){
         randomQuestionArray.push(ranNum);
     }
-i++;
 } while(i < 5);
 
 //turn this into a function
@@ -52,13 +51,31 @@ for(var i = 0; i < 5; i++){
     var question = selectedQuestions[i][0];
     var options = selectedQuestions[i].slice(1, selectedQuestions[i].length-1); 
     var answer = selectedQuestions[i].slice(selectedQuestions[i].length-1);
-    console.log(questions, options, answer);
+    //console.log(questions, options, answer);
 
     //Display questions on UI
-    $('#questionHolder').append('<div>' + question + '</div>'); 
+    $('#questionHolder').append('<div id="q' + i + '">' + question + '</div>'); 
+
+    //create the variable for the radio button form
+    var radioButton ='';
+
+    //loop through the options array to create the radio button options
+    for(var i = 0; i < options.length; i++){
+        var radioButton1 = 
+        '<label class=' + '"checkbox-inline"' + '><input type=' + '"checkbox"' + 'name=' + '"number"' + '>' + options[i] + '</label>';
+        radioButton = radioButton + radioButton1;
+    }
+
+    radioButton = '<form>' + radioButton + '</form>'
+    $('#questionHolder').append(radioButton);
+
 }
 
-<form>
+
+
+
+
+{/* <form>
 <label class="radio-inline">
   <input type="radio" name="optradio">Option 1
 </label>
@@ -68,4 +85,4 @@ for(var i = 0; i < 5; i++){
 <label class="radio-inline">
   <input type="radio" name="optradio">Option 3
 </label>
-</form>
+</form> */}
