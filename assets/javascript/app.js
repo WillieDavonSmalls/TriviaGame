@@ -60,13 +60,13 @@ for(var i = 0; i < 5; i++){
     var radioButton ='';
 
     //loop through the options array to create the radio button options
-    for(var i = 0; i < options.length; i++){
+    for(var j = 0; j < options.length; j++){
         var radioButton1 = 
-        '<label class=' + '"checkbox-inline"' + '><input type=' + '"checkbox"' + 'name=' + '"number"' + '>' + options[i] + '</label>';
+        '<label class=' + '"checkbox-inline"' + '><input type=' + '"checkbox"' + 'name=' + '"number"' + '>' + options[j] + '</label>';
         radioButton = radioButton + radioButton1;
     }
 
-    radioButton = '<form>' + radioButton + '</form>'
+    radioButton = '<form>' + radioButton + '</form><br>'
     $('#questionHolder').append(radioButton);
 
 }
