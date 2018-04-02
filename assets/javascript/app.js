@@ -95,11 +95,6 @@ function calScore(){
         arrGuess.push($(this).val());  //push values in array
     });
 
-    //If not all questions were answers send alert
-    if(arrGuess.length < 5){
-        alert("Please answer all quetions!");
-    }else{
-
         for(var k = 0; k < arrGuess.length; k++){
             var guess = optionsArray[k][arrGuess[k]];
             var answer = answerArray[k];
@@ -111,7 +106,12 @@ function calScore(){
             }
 
         }
-    }
+
+        //allows user to submit "non answers"
+        if(wins + loss != 5){
+            loss = 5 - wins;
+        }
+
 
 }
 
@@ -141,7 +141,26 @@ function decrement() {
     if (number === 0) {
 
     stop();
-    calScore();
+
+    $('input[type="radio"][name="optradio"]:checked').each(function(){
+        arrGuess.push($(this).val());  //push values in array
+    });
+    for(var k = 0; k < arrGuess.length; k++){
+        var guess = optionsArray[k][arrGuess[k]];
+        var answer = answerArray[k];
+        
+        if(guess == answer){
+            wins++;
+        }else{ 
+            loss++; 
+        }
+
+    }
+
+    if( wins + loss != 5){
+        loss = 5 - wins;
+    }
+
     }
 }
 
