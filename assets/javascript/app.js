@@ -62,7 +62,7 @@ for(var i = 0; i < 5; i++){
     //loop through the options array to create the radio button options
     for(var j = 0; j < options.length; j++){
         var radioButton1 = 
-        '<label class=' + '"checkbox-inline"' + '><input type=' + '"checkbox"' + 'name=' + '"number"' + '>' + options[j] + '</label>';
+        '<label class=' + '"radio-inline"' + '><input type=' + '"radio"' + 'name=' + '"optradio"' + '>' + options[j] + '</label>';
         radioButton = radioButton + radioButton1;
     }
 
@@ -73,16 +73,9 @@ for(var i = 0; i < 5; i++){
 
 
 
+var guesses = [] 
+for(var i = 0; i < 5; i++){
+    var guess = $("input[name='optradio']:checked").val();
+    guesses.push(guess)
+}
 
-
-{/* <form>
-<label class="radio-inline">
-  <input type="radio" name="optradio">Option 1
-</label>
-<label class="radio-inline">
-  <input type="radio" name="optradio">Option 2
-</label>
-<label class="radio-inline">
-  <input type="radio" name="optradio">Option 3
-</label>
-</form> */}
