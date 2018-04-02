@@ -89,8 +89,7 @@ var arrGuess = [];
 var wins = 0;
 var loss = 0;
 
-$( "#submitAnswers" ).click(function() {
-
+function calScore(){
     //fncn to store guesses
     $('input[type="radio"][name="optradio"]:checked').each(function(){
         arrGuess.push($(this).val());  //push values in array
@@ -114,6 +113,37 @@ $( "#submitAnswers" ).click(function() {
         }
     }
 
-  });
+}
 
+$( "#submitAnswers" ).click(function() {
+
+    calScore();
+
+  }); 
+
+//Time interval variables
+var number = 30;
+var intervalId;
+
+//function to run time.  Interval is for every second
+function run() {
+    intervalId = setInterval(decrement, 1000);
+}
+
+function stop() { //completely stops it. 
+    clearInterval(intervalId);
+}
+
+function decrement() {
+    number--;
+    //Display timer on UI
+    $("#time-remaining").html('<h2> Time Remaining: ' + number + '</h2>');
+    if (number === 0) {
+
+    stop();
+    calScore();
+    }
+}
+
+run();
 
