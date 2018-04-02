@@ -46,12 +46,23 @@ for(var i = 0; i < 5; i++){
     selectedQuestions.push(questions[randomQuestionArray[i]]);
 }
 
+
+var optionsArray = [];
+var answerArray = [];
+
 //Extract Question/Answer
 for(var i = 0; i < 5; i++){
+    
     var question = selectedQuestions[i][0];
     var options = selectedQuestions[i].slice(1, selectedQuestions[i].length-1); 
     var answer = selectedQuestions[i].slice(selectedQuestions[i].length-1);
     //console.log(questions, options, answer);
+
+    //array to hold options
+    optionsArray.push(options);
+
+    //array to hold correct answers
+    answerArray.push(answer);
 
     //Display questions on UI
     $('#questionHolder').append('<div id="q' + i + '">' + question + '</div>'); 
@@ -71,8 +82,12 @@ for(var i = 0; i < 5; i++){
 
 }
 
-    //array to store the guesses
-    var arrGuess = [];
+//array to store the guesses
+var arrGuess = [];
+
+//wins
+var wins = 0;
+var loss = 0;
 
 $( "#submitAnswers" ).click(function() {
 
@@ -80,6 +95,24 @@ $( "#submitAnswers" ).click(function() {
     $('input[type="radio"][name="optradio"]:checked').each(function(){
         arrGuess.push($(this).val());  //push values in array
     });
+
+    //If not all questions were answers send alert
+    if(arrGuess.length < 5){
+        alert("Please answer all quetions!");
+    }else{
+
+        for(var k = 0; k < arrGuess.length; k++){
+            var guess = optionsArray[k][arrGuess[k]];
+            var answer = answerArray[k];
+            
+            if(guess == answer){
+                wins++;
+            }else{ 
+                loss++; 
+            }
+
+        }
+    }
 
   });
 
