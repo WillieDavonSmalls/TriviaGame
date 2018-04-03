@@ -1,17 +1,6 @@
 
-$(document).ready(function(){
 
-    $('#game').hide();
-    $('#end').hide();
-
-    $("#startGame").click(function(){
-        $('#game').show();
-        $('#start').hide();
-        run();
-    });
-});
-
-
+//Object containing all of the possible questions.  Arrays within an array.  
 var questions = 
 [
     ["Who sings the hook on Jay Z’s Can’t Knock the Hustle?","Janet Jackson","Aaliyah","Mary J. Blige","Beyonce","Mary J. Blige"],
@@ -33,18 +22,26 @@ var questions =
     ["Which was Eminem's most controversial song?","We Made You","Stan","Bully","The Real Slim Shady","Bully"]
 ];
 
-//create loop to choose random number, if random number chosen, choose again
+//array to store the guesses
+var arrGuess = [];
+
+//Number of Correct Answers
+var wins = 0;
+//Number of Incorrect Answers
+var loss = 0;
+//Number of unanswered questions
+var unanswered = 0; 
+
 //function to create random number between a range
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   
 }
 
-//turn this into a function 
 //Empty array to hold the question
 var randomQuestionArray = [];
 
-// get a list of random numbers for questions to choose
+//do while loop to get a list of random numbers.
 do{
     var i = randomQuestionArray.length;
     var ranNum = getRandomInt(0,16);
@@ -53,13 +50,57 @@ do{
     }
 } while(i < 5);
 
-//turn this into a function
+
+
+//on document ready
+$(document).ready(function(){
+    //hide the game div which contains the questions
+    $('#game').hide();
+    //hide the end which shows the final score
+    $('#end').hide();
+
+    //on click start the game
+    $("#startGame").click(function(){
+        //show all of the questions
+        $('#game').show();
+        //hide the start button
+        $('#start').hide();
+        //start the timer
+        run();
+    });
+});
+
+//On Game completion
+function gameComplete(){
+    //hide game
+    $('#game').hide();
+    
+    //show the end of the game.  
+    $('#end').show();
+
+    //Display results
+    unanswered = 5 - (wins + loss);
+    $("#correctAnswers").html('<h2> Correct Answers: ' + wins + '</h2>');
+    $("#incorrectAnswers").html('<h2> Incorrect Answers: ' + loss + '</h2>');
+    $("#unaswered").html('<h2> Not Answered: ' + unanswered + '</h2>');
+}
+
+//Submit the answers at the end of the game
+$( "#submitAnswers" ).click(function() {
+    //calculate the scores
+    calScore();
+    //stop the clock
+    stop();
+    //compete game
+    gameComplete();
+    
+  }); 
+
 //Extract the questions from questions
 var selectedQuestions = []
 for(var i = 0; i < 5; i++){
     selectedQuestions.push(questions[randomQuestionArray[i]]);
 }
-
 
 var optionsArray = [];
 var answerArray = [];
@@ -96,13 +137,7 @@ for(var i = 0; i < 5; i++){
 
 }
 
-//array to store the guesses
-var arrGuess = [];
 
-//wins
-var wins = 0;
-var loss = 0;
-var unanswered = 0; 
 
 function calScore(){
     //fncn to store guesses
@@ -123,31 +158,12 @@ function calScore(){
         }
 
         unanswered = 5 - (wins + loss);
-
 }
 
-$( "#submitAnswers" ).click(function() {
-    //calculate the scores
-    calScore();
-    //stop the clock
-    stop();
 
-    //hide game
-    $('#game').hide();
-    
-    //show the end of the game.  
-    $('#end').show();
-
-    //Display results
-    unanswered = 5 - (wins + loss);
-    $("#correctAnswers").html('<h2> Correct Answers: ' + wins + '</h2>');
-    $("#incorrectAnswers").html('<h2> Incorrect Answers: ' + loss + '</h2>');
-    $("#unaswered").html('<h2> Not Answered: ' + unanswered + '</h2>');
-    
-  }); 
 
 //Time interval variables
-var number = 30;
+var number = 15;
 var intervalId;
 
 //function to run time.  Interval is for every second
@@ -163,26 +179,15 @@ function decrement() {
     number--;
     //Display timer on UI
     $("#time-remaining").html('<h2> Time Remaining: ' + number + '</h2>');
+    
+    //when the timer reaches 0, the game is complete
     if (number === 0) {
-
+    //stop the timer
     stop();
-
-    $('input[type="radio"][name="optradio"]:checked').each(function(){
-        arrGuess.push($(this).val());  //push values in array
-    });
-    for(var k = 0; k < arrGuess.length; k++){
-        var guess = optionsArray[k][arrGuess[k]];
-        var answer = answerArray[k];
-        
-        if(guess == answer){
-            wins++;
-        }else{ 
-            loss++; 
-        }
-        
-    }
-
-    unanswered = 5 - (wins + loss);
+    //calculate the score
+    calScore();
+    //compete game
+    gameComplete();
     
     }
 }
