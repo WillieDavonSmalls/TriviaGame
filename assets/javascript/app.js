@@ -96,6 +96,60 @@ $( "#submitAnswers" ).click(function() {
     
   }); 
 
+//calculate the score
+function calScore(){
+//fncn to store guesses
+$('input[type="radio"][name="optradio"]:checked').each(function(){
+    arrGuess.push($(this).val());  //push values in array
+});
+    //loop through the guesses to determine which are correct or incorrect
+    for(var k = 0; k < arrGuess.length; k++){
+        var guess = optionsArray[k][arrGuess[k]];
+        var answer = answerArray[k];
+        
+        if(guess == answer){
+            wins++;
+        }
+        else{ 
+            loss++; 
+        }
+    }
+
+    unanswered = 5 - (wins + loss);
+}
+
+
+//Time interval variables
+var number = 30;
+var intervalId;
+
+//run function which starts the decrement function for the timer
+function run() {
+    intervalId = setInterval(decrement, 1000);
+}
+
+function stop() { //completely stops it. 
+    clearInterval(intervalId);
+}
+
+//display the timer.  When the timer is 0 then the score is calculated and the game ends.  
+function decrement() {
+    number--;
+    //Display timer on UI
+    $("#time-remaining").html('<h2> Time Remaining: ' + number + '</h2>');
+    
+    //when the timer reaches 0, the game is complete
+    if (number === 0) {
+    //stop the timer
+    stop();
+    //calculate the score
+    calScore();
+    //compete game
+    gameComplete();
+    
+    }
+}
+
 //Extract the questions from questions
 var selectedQuestions = []
 for(var i = 0; i < 5; i++){
@@ -139,58 +193,10 @@ for(var i = 0; i < 5; i++){
 
 
 
-function calScore(){
-    //fncn to store guesses
-    $('input[type="radio"][name="optradio"]:checked').each(function(){
-        arrGuess.push($(this).val());  //push values in array
-    });
-
-        for(var k = 0; k < arrGuess.length; k++){
-            var guess = optionsArray[k][arrGuess[k]];
-            var answer = answerArray[k];
-            
-            if(guess == answer){
-                wins++;
-            }
-            else{ 
-                loss++; 
-            }
-        }
-
-        unanswered = 5 - (wins + loss);
-}
 
 
 
-//Time interval variables
-var number = 15;
-var intervalId;
 
-//function to run time.  Interval is for every second
-function run() {
-    intervalId = setInterval(decrement, 1000);
-}
-
-function stop() { //completely stops it. 
-    clearInterval(intervalId);
-}
-
-function decrement() {
-    number--;
-    //Display timer on UI
-    $("#time-remaining").html('<h2> Time Remaining: ' + number + '</h2>');
-    
-    //when the timer reaches 0, the game is complete
-    if (number === 0) {
-    //stop the timer
-    stop();
-    //calculate the score
-    calScore();
-    //compete game
-    gameComplete();
-    
-    }
-}
 
 
 
