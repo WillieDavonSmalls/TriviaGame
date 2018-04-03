@@ -1,3 +1,17 @@
+
+$(document).ready(function(){
+
+    $('#game').hide();
+    $('#end').hide();
+
+    $("#startGame").click(function(){
+        $('#game').show();
+        $('#start').hide();
+        run();
+    });
+});
+
+
 var questions = 
 [
     ["Who sings the hook on Jay Z’s Can’t Knock the Hustle?","Janet Jackson","Aaliyah","Mary J. Blige","Beyonce","Mary J. Blige"],
@@ -101,7 +115,8 @@ function calScore(){
             
             if(guess == answer){
                 wins++;
-            }else{ 
+            }
+            else{ 
                 loss++; 
             }
 
@@ -164,5 +179,5 @@ function decrement() {
     }
 }
 
-run();
+
 
