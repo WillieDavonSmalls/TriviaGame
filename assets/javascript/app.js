@@ -102,6 +102,7 @@ var arrGuess = [];
 //wins
 var wins = 0;
 var loss = 0;
+var unanswered = 0; 
 
 function calScore(){
     //fncn to store guesses
@@ -119,21 +120,30 @@ function calScore(){
             else{ 
                 loss++; 
             }
-
         }
 
-        //allows user to submit "non answers"
-        if(wins + loss != 5){
-            loss = 5 - wins;
-        }
-
+        unanswered = 5 - (wins + loss);
 
 }
 
 $( "#submitAnswers" ).click(function() {
-
+    //calculate the scores
     calScore();
+    //stop the clock
+    stop();
 
+    //hide game
+    $('#game').hide();
+    
+    //show the end of the game.  
+    $('#end').show();
+
+    //Display results
+    unanswered = 5 - (wins + loss);
+    $("#correctAnswers").html('<h2> Correct Answers: ' + wins + '</h2>');
+    $("#incorrectAnswers").html('<h2> Incorrect Answers: ' + loss + '</h2>');
+    $("#unaswered").html('<h2> Not Answered: ' + unanswered + '</h2>');
+    
   }); 
 
 //Time interval variables
@@ -169,13 +179,11 @@ function decrement() {
         }else{ 
             loss++; 
         }
-
+        
     }
 
-    if( wins + loss != 5){
-        loss = 5 - wins;
-    }
-
+    unanswered = 5 - (wins + loss);
+    
     }
 }
 
